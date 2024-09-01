@@ -7,6 +7,7 @@ import MainRequests.RequestSetup;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -70,18 +71,23 @@ public class CommercialContainersKPIs extends RequestSetup {
     @Test
     public void checkValuesFromResponse(){
 
-        KPISResponseData kpisResponseData= given()
+        RequestSpecification requestSpecification= given()
                 .headers(setHeaders(accessToken))
                 .baseUri(baseURI)
                 .basePath("API/api/RiyadhReports/CommercialContainersReportKPIs?timeOffset=-180&[object%20Object]")
-                .body(setBody())
-                .when().post().then().statusCode(200).extract().as(KPISResponseData.class);;
+                .body(setBody());
 
+        Response response =
+                requestSpecification.post()
+                        .then()
+                        .assertThat().statusCode(200)
+                        .contentType(ContentType.JSON)
+                        .extract().response();
+        String numberOfStreets =  response.jsonPath().getString("Data.NumberOfStreets");
+        Assert.assertEquals(numberOfStreets, "17");
+        KPISResponseData kpisResponseData= response.as(KPISResponseData.class);
+        System.out.println(kpisResponseData.data.numberOfCommercialContainers);
 
-        System.out.println("NumberOfStreets: " + kpisResponseData.getNumberOfStreets());
-
-//        KPISResponseData kpisResponseData = response.as(KPISResponseData.class);
-//        System.out.println(KPISResponseData.RootObject.KPIs.get(0).KPIName);
 
     }
 
