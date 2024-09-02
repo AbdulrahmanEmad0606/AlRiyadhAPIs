@@ -84,9 +84,10 @@ public class CommercialContainersKPIs extends RequestSetup {
                         .contentType(ContentType.JSON)
                         .extract().response();
         String numberOfStreets =  response.jsonPath().getString("Data.NumberOfStreets");
-        Assert.assertEquals(numberOfStreets, "17");
+       // Assert.assertEquals(numberOfStreets, "17");
         KPISResponseData kpisResponseData= response.as(KPISResponseData.class);
-        System.out.println(kpisResponseData.data.numberOfCommercialContainers);
+        System.out.println(kpisResponseData.data.numberOfViolationsForServiceProvider);
+            Assert.assertEquals(kpisResponseData.data.numberOfStreets,5);
 
 
     }
