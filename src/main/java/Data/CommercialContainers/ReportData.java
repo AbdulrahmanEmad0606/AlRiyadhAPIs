@@ -1,5 +1,8 @@
 package Data.CommercialContainers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReportData {
     public String SearchString;
     public int[] UnitIds;
