@@ -72,7 +72,7 @@ public class RequestSetup {
          */
         ReportData reportData = new ReportData(
                 "",
-                new int[]{1080},
+                new int[]{},
                 new int[]{},
                 new int[]{},
                 new int[]{},

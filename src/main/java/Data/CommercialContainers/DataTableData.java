@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DataTableData {
@@ -72,7 +74,7 @@ public class DataTableData {
         public String containerTypeId;
 
         @JsonProperty("ContainerTypeName")
-        public String containerTypeName;
+        public String   containerTypeName;
 
         @JsonProperty("ProcessingOwnerId")
         public Object processingOwnerId;

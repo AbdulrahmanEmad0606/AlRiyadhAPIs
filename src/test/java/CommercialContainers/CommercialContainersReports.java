@@ -34,26 +34,4 @@ public class CommercialContainersReports extends RequestSetup {
         response.getBody().prettyPrint();
     }
 
-    @Test
-    public void checkResponse() {
-        RequestSpecification requestSpecification = given()
-                .headers(setHeaders(accessToken))
-                .baseUri(baseURI)
-                .basePath("API/api/RiyadhReports/CommercialContainersReport")
-                .body(setBody());
-        Response response = requestSpecification.post();
-        response.prettyPrint();
-        DataTableData dataTableData = response.as(DataTableData.class);
-        int count = 0;
-
-        // Iterating through the ReportData list to count the occurrences of "حاوية ترميم"
-        for (DataTableData.ReportData report : dataTableData.data.reportData) {
-            if (report.containerTypeName.equals("حاوية ترميم")) {
-                count++;
-            }
-        }
-        System.out.println("Count of ContainerType : " + count);
-
-    }
-
 }

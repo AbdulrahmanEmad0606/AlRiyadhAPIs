@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KPISResponseData {
 
-    public Data Data;
+    public  Data data;
     public class Data{
         public int NumberOfStreets;
         public int NumberOfCommercialContainers;
