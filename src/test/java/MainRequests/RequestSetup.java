@@ -1,10 +1,12 @@
 package MainRequests;
 
 import Data.CommercialContainers.ReportData;
+import Data.CommercialContainers.ReportDataForGenericReports;
 import Data.CommercialContainers.UserData;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeTest;
 
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -89,4 +91,62 @@ public class RequestSetup {
                 "");
         return reportData;
     }
+
+    public ReportDataForGenericReports setBodyForGenericReports() {
+        /**
+         * @param searchString The search string for the report data
+         * @param unitIds The unit IDs for the report data
+         * @param campaignIds The campaign IDs for the report data
+         * @param municipalityIds The municipality IDs for the report data
+         * @param districtIds The district IDs for the report data
+         * @param streetIds The street IDs for the report data
+         * @param majorStatusIds The major status IDs for the report data
+         * @param eventStatusIds The event status IDs for the report data
+         * @param subFactorIds The sub factor IDs for the report data
+         * @param serviceProviderIds The service provider IDs for the report data
+         * @param containerTypeIds The container type IDs for the report data
+         * @param reporterIds The reporter IDs for the report data
+         * @param lastUpdateDateFrom The start date for the last update date range
+         * @param lastUpdateDateTo The end date for the last update date range
+         * @param submitionDateFrom The start date for the submission date range
+         * @param submitionDateTo The end date for the submission date range
+         */
+        ReportDataForGenericReports reportDataForGenericReports = new ReportDataForGenericReports(
+                null,
+                "date_desc",
+                0,
+                1000,
+                5422,
+                null,
+                0,
+                3,
+                null,
+                null,
+                new int[]{1038},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                -180
+        );
+        return reportDataForGenericReports;
+    }
+
+
 }
