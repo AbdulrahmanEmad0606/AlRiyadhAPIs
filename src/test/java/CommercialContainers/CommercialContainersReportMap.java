@@ -1,6 +1,5 @@
 package CommercialContainers;
 
-import Data.CommercialContainers.ReportData;
 import MainRequests.RequestSetup;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

@@ -3,7 +3,7 @@ package Data.CommercialContainers;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReportData {
+public class RequestDataForReportInDashBoard {
     public String SearchString;
     public int[] UnitIds;
     public int[] CampaignIds;
@@ -21,7 +21,7 @@ public class ReportData {
     public String SubmitionDateFrom;
     public String SubmitionDateTo;
 
-    public ReportData
+    public RequestDataForReportInDashBoard
             (String searchString,
              int[] unitIds,
              int[] campaignIds,

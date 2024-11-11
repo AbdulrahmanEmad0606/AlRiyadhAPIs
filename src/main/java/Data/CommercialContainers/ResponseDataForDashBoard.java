@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DataTableData {
+public class ResponseDataForDashBoard {
 
     @JsonProperty("Data")
     public Data data;
@@ -98,7 +96,7 @@ public class DataTableData {
         public String eventNo;
 
         @JsonProperty("CampaignId")
-        public Object campaignId;
+        public int campaignId;
 
         @JsonProperty("CampaignName")
         public Object campaignName;

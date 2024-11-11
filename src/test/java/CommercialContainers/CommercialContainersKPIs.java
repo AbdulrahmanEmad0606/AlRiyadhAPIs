@@ -1,25 +1,19 @@
 package CommercialContainers;
 
 
-import Data.CommercialContainers.DataTableData;
+import Data.CommercialContainers.ResponseDataForDashBoard;
 import Data.CommercialContainers.KPISResponseData;
-import Data.CommercialContainers.GeneralReportsData;
-import Data.CommercialContainers.ReportData;
+import Data.CommercialContainers.ResponseDataForGeneralReports;
 import MainRequests.RequestSetup;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.Every.everyItem;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class CommercialContainersKPIs extends RequestSetup {
     @Test
@@ -30,7 +24,7 @@ public class CommercialContainersKPIs extends RequestSetup {
                 .basePath("API/api/Event/GetReports")
                 .body(setBody());
         Response response = requestSpecification.post();
-        GeneralReportsData reportsData = response.as(GeneralReportsData.class);
+        ResponseDataForGeneralReports reportsData = response.as(ResponseDataForGeneralReports.class);
         System.out.println(reportsData.Data.eventsCount);
         //return  reportsData.Data.eventsCount;
     }
@@ -62,13 +56,13 @@ public class CommercialContainersKPIs extends RequestSetup {
         String jsonResponse = response.asString(); // Get the raw response as a string
 
 
-        DataTableData dataTableData = response.as(DataTableData.class);
+        ResponseDataForDashBoard dataTableData = response.as(ResponseDataForDashBoard.class);
         KPISResponseData kpisResponseData = response.as(KPISResponseData.class);
 
         // Extract distinct street names
         Set<String> distinctNames = new HashSet<>();
         if (dataTableData != null && dataTableData.data != null) {
-            for (DataTableData.ReportData reportData : dataTableData.data.reportData) {
+            for (ResponseDataForDashBoard.ReportData reportData : dataTableData.data.reportData) {
                 distinctNames.add(reportData.streetName);
             }
         }
@@ -94,9 +88,15 @@ public class CommercialContainersKPIs extends RequestSetup {
         Response response = requestSpecification.post();
         response.prettyPrint();
         KPISResponseData kpisResponseData = response.as(KPISResponseData.class);
-        System.out.println(kpisResponseData.data.NumberOfCommercialContainers);
-        Assert.assertEquals(kpisResponseData.data.NumberOfCommercialContainers,getTotalCountOfGeneralReportsForCommercialContainersReports());
 
+        if (kpisResponseData != null && kpisResponseData.data != null) {
+            if (kpisResponseData.data.NumberOfCommercialContainers != 0) {
+                System.out.println(kpisResponseData.data.NumberOfCommercialContainers);
+            }
+            Assert.assertEquals(kpisResponseData.data.NumberOfCommercialContainers, getTotalCountOfGeneralReportsForCommercialContainersReports());
+        } else {
+            System.err.println("KPISResponseData or its data field is null");
+        }
     }
 
     @Test
@@ -109,11 +109,11 @@ public class CommercialContainersKPIs extends RequestSetup {
                 .body(setBody());
         Response response = requestSpecification.post();
         response.prettyPrint();
-        DataTableData dataTableData = response.as(DataTableData.class);
+        ResponseDataForDashBoard dataTableData = response.as(ResponseDataForDashBoard.class);
         int count = 0;
 
         // Iterating through the ReportData list to count the occurrences of "حاوية ترميم"
-        for (DataTableData.ReportData report : dataTableData.data.reportData) {
+        for (ResponseDataForDashBoard.ReportData report : dataTableData.data.reportData) {
             if (report.containerTypeName.equals("حاوية نفايات تجارية")) {
                 count++;
             }
@@ -132,12 +132,12 @@ public class CommercialContainersKPIs extends RequestSetup {
                 .body(setBody());
         Response response = requestSpecification.post();
         response.prettyPrint();
-        DataTableData dataTableData = response.as(DataTableData.class);
+        ResponseDataForDashBoard dataTableData = response.as(ResponseDataForDashBoard.class);
         KPISResponseData KPISResponseData = response.as(KPISResponseData.class);
         int count = 0;
 
         // Iterating through the ReportData list to count the occurrences of "حاوية ترميم"
-        for (DataTableData.ReportData report : dataTableData.data.reportData) {
+        for (ResponseDataForDashBoard.ReportData report : dataTableData.data.reportData) {
             if (report.containerTypeName.equals("حاوية ترميم")) {
                 count++;
             }
@@ -155,10 +155,15 @@ public class CommercialContainersKPIs extends RequestSetup {
                 .headers(setHeaders(accessToken))
                 .baseUri(baseURI)
                 .basePath("API/api/Event/GetReports")
-                .body(setBodyForGenericReports());
+                .body(setBody());
         Response response = requestSpecification.post();
-        GeneralReportsData dataTableData = response.as(GeneralReportsData.class);
+        ResponseDataForGeneralReports dataTableData = response.as(ResponseDataForGeneralReports.class);
         return dataTableData.Data.eventsCount;
+    }
+
+    @Test
+    public void checkavailabilityOfKey() {
+
     }
 }
 

@@ -1,12 +1,11 @@
 package MainRequests;
 
-import Data.CommercialContainers.ReportData;
-import Data.CommercialContainers.ReportDataForGenericReports;
+import Data.CommercialContainers.RequestDataForReportInDashBoard;
+import Data.CommercialContainers.RequstDataForGenericReports;
 import Data.CommercialContainers.UserData;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeTest;
 
-import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -53,7 +52,7 @@ public class RequestSetup {
                 "Origin", "http://yxdemo.eastus.cloudapp.azure.com"
         );
     }
-    public ReportData setBody() {
+    public RequestDataForReportInDashBoard setBody() {
         /**
          * @param searchString The search string for the report data
          * @param unitIds The unit IDs for the report data
@@ -72,7 +71,7 @@ public class RequestSetup {
          * @param submitionDateFrom The start date for the submission date range
          * @param submitionDateTo The end date for the submission date range
          */
-        ReportData reportData = new ReportData(
+        RequestDataForReportInDashBoard reportData = new RequestDataForReportInDashBoard(
                 "",
                 new int[]{},
                 new int[]{},
@@ -92,7 +91,7 @@ public class RequestSetup {
         return reportData;
     }
 
-    public ReportDataForGenericReports setBodyForGenericReports() {
+    public RequstDataForGenericReports setBodyForGenericReports() {
         /**
          * @param searchString The search string for the report data
          * @param unitIds The unit IDs for the report data
@@ -111,7 +110,8 @@ public class RequestSetup {
          * @param submitionDateFrom The start date for the submission date range
          * @param submitionDateTo The end date for the submission date range
          */
-        ReportDataForGenericReports reportDataForGenericReports = new ReportDataForGenericReports(
+        RequstDataForGenericReports reportDataForGenericReports =
+                new RequstDataForGenericReports(
                 null,
                 "date_desc",
                 0,
