@@ -12,10 +12,31 @@ import static io.restassured.RestAssured.given;
 
 public class RequestSetup {
     public String baseURI = "http://yxdemo.eastus.cloudapp.azure.com/Check/Demo/AlRiyadh/";
-   public String accessToken;
+    protected String accessToken;
+
+    protected Response makeApiCall(String basePath) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("pageSize", 500)
+                .basePath(basePath)
+                .body(setBody())
+                .post();
+    }
+    protected Response makeApiCallWithFilter(String basePath) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("pageSize", 500)
+                .basePath(basePath)
+                .body(setBodyForGenericReports())
+                .post();
+    }
+
     UserData userData = new UserData();
+
     @BeforeTest
-    public void login() {
+    protected void login() {
         Response response = given()
                 .headers(Map.of(
                         "Allow-Headers", "Authorization, Content-Type, Allow-Origin",
@@ -30,7 +51,7 @@ public class RequestSetup {
                 ))
                 .baseUri(baseURI)
                 .basePath("/API/token")
-                .body("username="+userData.username+"&"+"password="+userData.password+"&"+"grant_type=password")
+                .body("username=" + userData.username + "&password=" + userData.password + "&grant_type=password")
                 .post();
 
         accessToken = response.jsonPath().getString("access_token");
@@ -38,7 +59,7 @@ public class RequestSetup {
         response.getBody().prettyPrint();
     }
 
-    public Map<String, String> setHeaders(String accessToken) {
+    private Map<String, String> setHeaders(String accessToken) {
         return Map.of(
                 "Accept", "application/json",
                 "Accept-Language", "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6",
@@ -52,101 +73,16 @@ public class RequestSetup {
                 "Origin", "http://yxdemo.eastus.cloudapp.azure.com"
         );
     }
-    public RequestDataForReportInDashBoard setBody() {
-        /**
-         * @param searchString The search string for the report data
-         * @param unitIds The unit IDs for the report data
-         * @param campaignIds The campaign IDs for the report data
-         * @param municipalityIds The municipality IDs for the report data
-         * @param districtIds The district IDs for the report data
-         * @param streetIds The street IDs for the report data
-         * @param majorStatusIds The major status IDs for the report data
-         * @param eventStatusIds The event status IDs for the report data
-         * @param subFactorIds The sub factor IDs for the report data
-         * @param serviceProviderIds The service provider IDs for the report data
-         * @param containerTypeIds The container type IDs for the report data
-         * @param reporterIds The reporter IDs for the report data
-         * @param lastUpdateDateFrom The start date for the last update date range
-         * @param lastUpdateDateTo The end date for the last update date range
-         * @param submitionDateFrom The start date for the submission date range
-         * @param submitionDateTo The end date for the submission date range
-         */
-        RequestDataForReportInDashBoard reportData = new RequestDataForReportInDashBoard(
-                "",
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new int[]{},
-                new String[]{},
-                new String[]{},
-                new String[]{},
-                new int[]{},
-                "",
-                "",
-                "",
-                "");
-        return reportData;
-    }
 
-    public RequstDataForGenericReports setBodyForGenericReports() {
-        /**
-         * @param searchString The search string for the report data
-         * @param unitIds The unit IDs for the report data
-         * @param campaignIds The campaign IDs for the report data
-         * @param municipalityIds The municipality IDs for the report data
-         * @param districtIds The district IDs for the report data
-         * @param streetIds The street IDs for the report data
-         * @param majorStatusIds The major status IDs for the report data
-         * @param eventStatusIds The event status IDs for the report data
-         * @param subFactorIds The sub factor IDs for the report data
-         * @param serviceProviderIds The service provider IDs for the report data
-         * @param containerTypeIds The container type IDs for the report data
-         * @param reporterIds The reporter IDs for the report data
-         * @param lastUpdateDateFrom The start date for the last update date range
-         * @param lastUpdateDateTo The end date for the last update date range
-         * @param submitionDateFrom The start date for the submission date range
-         * @param submitionDateTo The end date for the submission date range
-         */
-        RequstDataForGenericReports reportDataForGenericReports =
-                new RequstDataForGenericReports(
-                null,
-                "date_desc",
-                0,
-                1000,
-                5422,
-                null,
-                0,
-                3,
-                null,
-                null,
-                new int[]{1038},
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                0,
-                -180
+    protected RequestDataForReportInDashBoard setBody() {
+        return new RequestDataForReportInDashBoard(
+                "", new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new String[]{}, new String[]{}, new String[]{}, new int[]{}, "", "", "", ""
         );
-        return reportDataForGenericReports;
     }
 
-
+    protected RequstDataForGenericReports setBodyForGenericReports() {
+        return new RequstDataForGenericReports(
+                null, "date_desc", 0, 1000, 5422, null, 0, 3, null, null, new int[]{1038}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, -180
+        );
+    }
 }
