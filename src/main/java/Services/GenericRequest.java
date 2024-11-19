@@ -32,7 +32,7 @@ public class GenericRequest {
                 "", new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new String[]{}, new String[]{}, new String[]{}, new int[]{}, "", "", "", ""
         );
     }
-    private Map<String, String> setHeaders(String accessToken) {
+    protected Map<String, String> setHeaders(String accessToken) {
         return Map.of(
                 "Accept", "application/json",
                 "Accept-Language", "en-GB,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-US;q=0.6",
@@ -61,4 +61,13 @@ public class GenericRequest {
         );
     }
 
+    protected Response makeApiCallWithSort(String sortKey) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam(sortKey)
+                .basePath(endpoint)
+                .body(setBodyForGenericReports())
+                .post();
+    }
 }

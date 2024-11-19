@@ -1,6 +1,7 @@
 package CommercialContainers;
 
 import MainRequests.RequestSetup;
+import Services.CommercialContainersReports;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -10,18 +11,16 @@ import static org.hamcrest.Matchers.hasKey;
 
 public class CommercialContainersReportsKPIs extends RequestSetup {
 
-    private static final String GenaricReportsBasePath = "API/api/Event/GetReports";
-
+    private CommercialContainersReports commercialContainersReports = new CommercialContainersReports();
     @Test
     public void checkThatStatusCodeIs200() {
-        Response response = makeApiCallWithFilter(GenaricReportsBasePath);
+        Response response = commercialContainersReports.call(accessToken);
         response.then().assertThat().statusCode(200);
     }
 
     @Test
     public void checkThatTheAddedKeysIsValid() {
-        Response response = makeApiCallWithFilter(GenaricReportsBasePath);
-
+        Response response = commercialContainersReports.call(accessToken);
         response.then().assertThat()
                 .body("Data", hasKey("ReportData")).extract()
                 .response();
