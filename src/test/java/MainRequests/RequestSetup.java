@@ -12,6 +12,16 @@ import static io.restassured.RestAssured.given;
 
 public class RequestSetup {
     public String baseURI = "http://yxdemo.eastus.cloudapp.azure.com/Check/Demo/AlRiyadh/";
+    /** Commercial containers KPIS Attributes **/
+    // Base path for generic reports API
+    protected static String GenaricReportsBasePath = "API/api/Event/GetReports";
+
+    // Base path for KPIs related to commercial containers
+    protected static String KPIsBaseBath = "API/api/RiyadhReports/CommercialContainersReportKPIs";
+
+    // Base path for commercial containers reports
+    protected static String commercialContainersReportsBasePath = "API/api/RiyadhReports/CommercialContainersReport";
+
     protected String accessToken;
 
     protected Response makeApiCall(String basePath) {
@@ -32,6 +42,16 @@ public class RequestSetup {
                 .body(setBodyForGenericReports())
                 .post();
     }
+    protected Response makeApiCallWithSort(String basePath,String sortKey) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam(sortKey)
+                .basePath(basePath)
+                .body(setBodyForGenericReports())
+                .post();
+    }
+
 
     UserData userData = new UserData();
 
@@ -55,9 +75,7 @@ public class RequestSetup {
                 .post();
 
         accessToken = response.jsonPath().getString("access_token");
-        System.out.println(accessToken);
-        response.getBody().prettyPrint();
-    }
+          }
 
     private Map<String, String> setHeaders(String accessToken) {
         return Map.of(
