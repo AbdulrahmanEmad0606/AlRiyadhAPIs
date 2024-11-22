@@ -24,24 +24,6 @@ public class RequestSetup {
 
     protected String accessToken;
 
-    protected Response makeApiCall(String basePath) {
-        return given()
-                .headers(setHeaders(accessToken))
-                .baseUri(baseURI)
-                .queryParam("pageSize", 500)
-                .basePath(basePath)
-                .body(setBody())
-                .post();
-    }
-    protected Response makeApiCallWithFilter(String basePath) {
-        return given()
-                .headers(setHeaders(accessToken))
-                .baseUri(baseURI)
-                .queryParam("pageSize", 500)
-                .basePath(basePath)
-                .body(setBodyForGenericReports())
-                .post();
-    }
     protected Response makeApiCallWithSort(String basePath,String sortKey) {
         return given()
                 .headers(setHeaders(accessToken))

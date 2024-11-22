@@ -21,7 +21,7 @@ public class GenericRequest {
      return given()
              .headers(setHeaders(accessToken))
              .baseUri(baseURI)
-             .queryParam("pageSize", 500)
+             .queryParam("pageSize", 5000)
              .basePath(endpoint)
              .body(setBody())
              .post();
@@ -59,6 +59,18 @@ public class GenericRequest {
         return new RequstDataForGenericReports(
                 null, "date_desc", 0, 1000, 5422, null, 0, 3, null, null, new int[]{1038}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, -180
         );
+    }
+
+    public Response callWithPagination(String accessToken, int pageIndex) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("pageSize", 10)
+                .queryParam("pageIndex", pageIndex)
+                .queryParam("sortKey", "submitDate_desc")
+                .basePath(endpoint)
+                .body(setBodyForGenericReports())
+                .post();
     }
 
 }

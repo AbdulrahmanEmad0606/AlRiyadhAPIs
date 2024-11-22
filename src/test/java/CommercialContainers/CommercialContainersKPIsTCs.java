@@ -7,7 +7,6 @@ import MainRequests.RequestSetup;
 import Services.CommercialContainersReports;
 import Services.CommercialContainersKPI;
 import Services.GeneralReports;
-import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -59,13 +58,10 @@ public class CommercialContainersKPIsTCs extends RequestSetup {
         KPISResponseData kpisData = kpi.call(accessToken).as(KPISResponseData.class);
         Assert.assertEquals(kpisData.data.NumberOfCommercialRestorationContainers, count, "Number Of Commercial Restoration Containers is not correct");
     }
-    /**
-     * Test to check that the user is not authorized to view the data.
-     */
+
     @Test(priority = 6)
     public void checkThatUserIsNotAuthorized() {
-        Response response = kpi.call(accessToken);
-        KPISResponseData reportsData = response.as(KPISResponseData.class);
+        KPISResponseData reportsData = kpi.call(accessToken).as(KPISResponseData.class);
         boolean isAuthorized = !(reportsData.data.NumberOfCommercialContainers == 0 &&
                 reportsData.data.NumberOfCommercialRestorationContainers == 0 &&
                 reportsData.data.NumberOfStreets == 0 &&

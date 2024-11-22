@@ -75,13 +75,13 @@ public class ResponseDataForDashBoard {
         public String   containerTypeName;
 
         @JsonProperty("ProcessingOwnerId")
-        public Object processingOwnerId;
+        public int processingOwnerId;
 
         @JsonProperty("ProcessingOwner")
-        public Object processingOwner;
+        public String ProcessingOwner;
 
         @JsonProperty("ProcessingDate")
-        public Object processingDate;
+        public String processingDate;
 
         @JsonProperty("LastUpdateDate")
         public Date lastUpdateDate;
