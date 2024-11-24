@@ -1,21 +1,27 @@
 package Data.CommercialContainers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class MapResponseData {
-    public class Data{
+    @JsonProperty("Data")
+    public  Data data;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Data{
         @JsonProperty("PageIndex")
         public int pageIndex;
         @JsonProperty("TotalCount")
         public int totalCount;
         @JsonProperty("ReportData")
-        public ArrayList<ReportDatum> reportData;
+        public ArrayList<ReportData> reportData;
     }
-
-    public class ReportDatum{
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class ReportData{
         @JsonProperty("Latitude")
         public String latitude;
         @JsonProperty("Longitude")

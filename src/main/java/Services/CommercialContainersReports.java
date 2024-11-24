@@ -24,8 +24,6 @@ public class CommercialContainersReports extends GenericRequest {
         System.out.println(lastPageIndex + " "+ (int) Math.ceil((double) totalCount ));
         return lastPageIndex;
 
-        // Fetch the last page
-
     }
     public int getLastPageSize(Response lastPageResponse){
        // Response lastPageResponse = this.callWithPagination(accessToken,);
