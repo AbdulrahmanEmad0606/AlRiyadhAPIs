@@ -46,11 +46,22 @@ public class GenericRequest {
                 "Origin", "http://yxdemo.eastus.cloudapp.azure.com"
         );
     }
-    public Response makeApiCallWithFilter(String accessToken) {
+    public Response makeApiCallWithFilter(String accessToken, String sortKey) {
         return given()
                 .headers(setHeaders(accessToken))
                 .baseUri(baseURI)
-                .queryParam("pageSize", 500)
+                .queryParam("pageSize", 5000)
+                .basePath(endpoint)
+                .body(setBodyForGenericReports())
+                .post();
+    }
+    public Response makeApiCallWithSort(String accessToken, String sortKey) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("SortOrder",sortKey)
+                .queryParam("lang", "0")
+                .queryParam("pageSize", 5000)
                 .basePath(endpoint)
                 .body(setBodyForGenericReports())
                 .post();

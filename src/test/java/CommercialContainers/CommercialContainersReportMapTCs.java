@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class CommercialContainersReportMap extends RequestSetup {
+public class CommercialContainersReportMapTCs extends RequestSetup {
 
     private final CommercialContainersMap reports = new CommercialContainersMap();
 
