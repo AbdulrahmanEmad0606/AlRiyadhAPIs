@@ -15,12 +15,10 @@ import java.util.Objects;
 public class CommercialContainersReportMapTCs extends RequestSetup {
 
     private final CommercialContainersMap reports = new CommercialContainersMap();
-
     @Test
     public void checkThatStatusCodeIs200() {
         reports.call(accessToken).then().assertThat().statusCode(200);
     }
-
     @Test
     public void checkThatTheAddedKeysIsValid() {
         Response response = reports.call(accessToken);

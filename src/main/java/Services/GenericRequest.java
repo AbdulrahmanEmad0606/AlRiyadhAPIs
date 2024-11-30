@@ -1,32 +1,26 @@
 package Services;
 import Data.CommercialContainers.RequestDataForReportInDashBoard;
 import Data.CommercialContainers.RequstDataForGenericReports;
+import Data.CommercialContainers.ResponseDataForDashBoard;
+import Data.CommercialContainers.UserData;
 import io.restassured.response.Response;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 
+import java.util.List;
 import java.util.Map;
 
 
 import static io.restassured.RestAssured.given;
 
 public class GenericRequest {
-    String endpoint, accessToken;
+   public String endpoint, accessToken;
+    UserData userData = new UserData();
+
     public GenericRequest(String endpoint) {
         this.endpoint = endpoint;
     }
-
-    //    String endpoint = "API/api/RiyadhReports/CommercialContainersReportKPIs";
     public String baseURI = "http://yxdemo.eastus.cloudapp.azure.com/Check/Demo/AlRiyadh/";
-    public Response call(String accessToken) {
-
-     return given()
-             .headers(setHeaders(accessToken))
-             .baseUri(baseURI)
-             .queryParam("pageSize", 5000)
-             .basePath(endpoint)
-             .body(setBody())
-             .post();
- }
-
     protected RequestDataForReportInDashBoard setBody() {
         return new RequestDataForReportInDashBoard(
                 "", new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new String[]{}, new String[]{}, new String[]{}, new int[]{}, "", "", "", ""
@@ -46,7 +40,22 @@ public class GenericRequest {
                 "Origin", "http://yxdemo.eastus.cloudapp.azure.com"
         );
     }
-    public Response makeApiCallWithFilter(String accessToken, String sortKey) {
+    protected RequstDataForGenericReports setBodyForGenericReports() {
+        return new RequstDataForGenericReports(
+                null, "date_desc", 0, 1000, 5422, null, 0, 3, null, null, new int[]{1038}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, -180
+        );
+    }
+    public Response call(String accessToken) {
+
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("pageSize", 5000)
+                .basePath(endpoint)
+                .body(setBody())
+                .post();
+    }
+    public Response makeApiCallWithFilter(String accessToken) {
         return given()
                 .headers(setHeaders(accessToken))
                 .baseUri(baseURI)
@@ -66,12 +75,6 @@ public class GenericRequest {
                 .body(setBodyForGenericReports())
                 .post();
     }
-    protected RequstDataForGenericReports setBodyForGenericReports() {
-        return new RequstDataForGenericReports(
-                null, "date_desc", 0, 1000, 5422, null, 0, 3, null, null, new int[]{1038}, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, -180
-        );
-    }
-
     public Response callWithPagination(String accessToken, int pageIndex) {
         return given()
                 .headers(setHeaders(accessToken))
@@ -83,5 +86,25 @@ public class GenericRequest {
                 .body(setBodyForGenericReports())
                 .post();
     }
+    @BeforeTest
+    protected void login() {
+        Response response = given()
+                .headers(Map.of(
+                        "Allow-Headers", "Authorization, Content-Type, Allow-Origin",
+                        "Enabled", "true",
+                        "DNT", "1",
+                        "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+                        "Authorization", "bearer undefined",
+                        "Allow-Origin", "*",
+                        "Content-Type", "application/json",
+                        "Accept", "application/json",
+                        "Referer", "http://yxdemo.eastus.cloudapp.azure.com/CHECK/Demo/AlRiyadh/Site/login?prevUrl=home"
+                ))
+                .baseUri(baseURI)
+                .basePath("/API/token")
+                .body("username=" + userData.username + "&password=" + userData.password + "&grant_type=password")
+                .post();
 
+        accessToken = response.jsonPath().getString("access_token");
+    }
 }

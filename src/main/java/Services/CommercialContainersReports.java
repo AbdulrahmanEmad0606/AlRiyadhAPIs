@@ -2,6 +2,7 @@ package Services;
 
 import Data.CommercialContainers.ResponseDataForDashBoard;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public class CommercialContainersReports extends GenericRequest {
         List<ResponseDataForDashBoard.ReportData> reportDataList2 = lastPageResponse.as(ResponseDataForDashBoard.class).data.reportData;
         return reportDataList2.size();
     }
+
+
 }
