@@ -1,5 +1,4 @@
 package CommercialContainers;
-
 import Data.CommercialContainers.KPISResponseData;
 import Data.CommercialContainers.ResponseDataForDashBoard;
 import Data.CommercialContainers.ResponseDataForGeneralReports;
@@ -34,7 +33,7 @@ public class CommercialContainersKPIsTCs extends RequestSetup {
 
     @Test(priority = 3)
     public void checkTotalNumberOfCommercialContainers() {
-        ResponseDataForGeneralReports reportsData = generalReports.call(accessToken).as(ResponseDataForGeneralReports.class);
+        ResponseDataForGeneralReports reportsData = generalReports.makeApiCallWithFilter(accessToken).as(ResponseDataForGeneralReports.class);
         KPISResponseData kpisData = kpi.call(accessToken).as(KPISResponseData.class);
         Assert.assertEquals(reportsData.Data.eventsCount, kpisData.data.NumberOfCommercialContainers, "The number of reports is not correct");
     }

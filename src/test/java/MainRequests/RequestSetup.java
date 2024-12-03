@@ -14,7 +14,6 @@ public class RequestSetup {
     protected String accessToken=genericRequest.accessToken;
     UserData userData = new UserData();
 
-
     @BeforeTest
     protected void login() {
         Response response = given()
