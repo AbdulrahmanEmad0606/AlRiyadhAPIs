@@ -3,6 +3,7 @@ package CommercialContainers;
 import Data.CommercialContainers.ResponseDataForDashBoard;
 import MainRequests.RequestSetup;
 import Services.CommercialContainersReports;
+import Services.GenericRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class CommercialContainersReportsTCs extends RequestSetup {
 
     private final CommercialContainersReports reports = new CommercialContainersReports();
+    public GenericRequest genericRequest = new GenericRequest("API/api/RiyadhReports/CommercialContainersReport");
 
     @Test
     public void checkThatStatusCodeIs200() {

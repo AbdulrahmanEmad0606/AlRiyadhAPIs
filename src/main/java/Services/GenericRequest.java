@@ -52,5 +52,30 @@ public class GenericRequest {
                 .body(setBody())
                 .post();
     }
+    public Response makeApiCallWithFilter(String accessToken, RequestDataForReportInDashBoard filterType) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("pageSize", 5000)
+                .basePath(endpoint)
+                .body(filterType)
+                .post();
+    }
+
+
+
+
+    public Response makeApiCallWithSort(String accessToken, String sortKey, RequestDataForReportInDashBoard JSONBody) {
+        return given()
+                .headers(setHeaders(accessToken))
+                .baseUri(baseURI)
+                .queryParam("SortOrder",sortKey)
+                .queryParam("lang", "0")
+                .queryParam("pageSize", 5000)
+                .basePath(endpoint)
+                .body(JSONBody)
+                .post();
+    }
+
 
 }

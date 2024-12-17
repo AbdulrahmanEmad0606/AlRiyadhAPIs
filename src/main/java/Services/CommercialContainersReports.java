@@ -1,11 +1,8 @@
 package Services;
 
 import Data.CommercialContainers.RequestDataForReportInDashBoard;
-import Data.CommercialContainers.RequstDataForGenericReports;
 import Data.CommercialContainers.ResponseDataForDashBoard;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -15,36 +12,27 @@ public class CommercialContainersReports extends GenericRequest {
     public CommercialContainersReports() {
         super("API/api/RiyadhReports/CommercialContainersReport");
     }
-    static RequestDataForReportInDashBoard setBodyForCommercialContainers() {
+    public static RequestDataForReportInDashBoard setBodyForCommercialContainers() {
         return new RequestDataForReportInDashBoard(
                 "", new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new String[]{}, new String[]{}, new String[]{}, new int[]{}, "", "", "", ""
         );
     }
-    static RequestDataForReportInDashBoard filterByUnitName() {
+    public static RequestDataForReportInDashBoard filterByUnitName() {
         return new RequestDataForReportInDashBoard(
                 "", new int[]{1076}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new int[]{}, new String[]{}, new String[]{}, new String[]{}, new int[]{}, "", "", "", ""
         );
     }
-    public Response makeApiCallWithFilter(String accessToken) {
-        return given()
-                .headers(setHeaders(accessToken))
-                .baseUri(baseURI)
-                .queryParam("pageSize", 5000)
-                .basePath(endpoint)
-                .body(filterByUnitName())
-                .post();
-    }
-    public Response makeApiCallWithSort(String accessToken, String sortKey) {
-        return given()
-                .headers(setHeaders(accessToken))
-                .baseUri(baseURI)
-                .queryParam("SortOrder",sortKey)
-                .queryParam("lang", "0")
-                .queryParam("pageSize", 5000)
-                .basePath(endpoint)
-                .body(setBodyForCommercialContainers())
-                .post();
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     public Response callWithPagination(String accessToken, int pageIndex) {

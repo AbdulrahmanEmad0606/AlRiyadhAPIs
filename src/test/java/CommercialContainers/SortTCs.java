@@ -12,7 +12,7 @@ public class SortTCs extends RequestSetup {
     final CommercialContainersReports reports = new CommercialContainersReports();
 
     public void checkSorting(String sortField, boolean ascending) {
-        List<ResponseDataForDashBoard.ReportData> list = reports.makeApiCallWithSort(accessToken, sortField)
+        List<ResponseDataForDashBoard.ReportData> list = reports.makeApiCallWithSort(accessToken, sortField,CommercialContainersReports.setBodyForCommercialContainers())
                 .as(ResponseDataForDashBoard.class).data.reportData;
         boolean isSorted = true;
         for (int i = 1; i < list.size(); i++) {
